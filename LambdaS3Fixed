@@ -1,0 +1,21 @@
+import boto3
+
+
+def lambda_handler(event, context):
+    s3 = boto3.client('s3')
+
+    response = s3.list_buckets()
+
+    print('Existing buckets and files:')
+
+    for bucket in response['Buckets']:
+        bucket_name = bucket['Name']
+        print(f'Bucket: {bucket_name}')
+    
+        objects = s3.list_objects_v2(Bucket=bucket_name)
+        if 'Contents' in objects:
+            for obj in objects['Contents']:
+                file_name = obj["Key"]
+                print(f'File: {file_name}')
+        else:
+            print('No files in this bucket.')
