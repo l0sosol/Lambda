@@ -1,0 +1,22 @@
+import boto3
+from boto3 import client
+
+# def lambda_handler(event, context):
+
+# s3 = boto3.client('s3')
+# response = s3.list_buckets()
+
+# Output the bucket names
+# print('Existing buckets:')
+# for bucket in response['Buckets']:
+#     print(f'  {bucket["Name"]}')
+
+# conn = client('s3')
+# for key in conn.list_objects(Bucket='my-first-test-bucket')['Contents']:
+#     print(key['Key'])
+
+s3 = boto3.resource('s3')
+my_bucket = s3.Bucket('my-first-test-bucket')
+
+for my_bucket_object in my_bucket.objects.all():
+    print(my_bucket_object.key)
